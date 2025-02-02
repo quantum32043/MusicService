@@ -25,25 +25,28 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextField
 import androidx.compose.ui.graphics.Color
 import com.example.musicservice.ui.theme.LightBlueGray
+import com.example.musicservice.ui.theme.Violet
 import org.w3c.dom.Text
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistrationTextField(text: String) {
-    var textFieldValue = remember { TextFieldValue() }
-
-    TextField(textFieldValue,
-        onValueChange = { textFieldValue = it },
-        label = { Text(text) },
-        modifier = Modifier.height(60.dp)
+fun RegistrationTextField(label: String, value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
+    TextField(
+        value = value,
+        onValueChange = onValueChange,  // Передаем в родительский компонент
+        label = { Text(label) },
+        modifier = Modifier
+            .height(60.dp)
             .fillMaxWidth()
             .padding(horizontal = 15.dp),
         colors = TextFieldDefaults.textFieldColors(
             containerColor  = BlueGray,
-            unfocusedTextColor = Color.Red,
-            focusedTextColor = Color.Red,
+            unfocusedTextColor = Violet,
+            focusedTextColor = Violet,
             focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent),
-        textStyle = TextStyle(fontSize = 10.sp),
-        shape = RoundedCornerShape(12.dp))
+            unfocusedIndicatorColor = Color.Transparent
+        ),
+        textStyle = TextStyle(fontSize = 18.sp),
+        shape = RoundedCornerShape(12.dp)
+    )
 }
