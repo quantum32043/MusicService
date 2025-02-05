@@ -11,7 +11,7 @@ class AuthorizationViewModel(private val auth: FirebaseAuth = FirebaseAuth.getIn
     val isUserAuthenticated: StateFlow<Boolean> = _isUserAuthenticated
 
     fun signIn(email: String, password: String) {
-        com.example.musicservice.data.firebase.auth.signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
                 if(task.isSuccessful) {
                     Log.d("FirebaseAuth", "Авторизация успешна: ${auth.currentUser?.email}}")

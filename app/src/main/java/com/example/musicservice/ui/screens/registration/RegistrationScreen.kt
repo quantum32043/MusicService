@@ -27,6 +27,7 @@ import com.example.musicservice.ui.components.CustomButton
 import com.example.musicservice.ui.components.RegistrationTextField
 import com.example.musicservice.ui.components.TextWithClickableLink
 import com.example.musicservice.ui.theme.DeepGray
+import com.google.firebase.auth.FirebaseAuth
 
 fun isValidEmail(email: String): Boolean {
     val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+)\\.([a-z]{2,})$".toRegex()
@@ -46,7 +47,6 @@ fun RegistrationScreen(navController: NavController, registrationViewModel: Regi
     var isEmailCorrect = remember { mutableStateOf(true) }
     var isPasswordCorrect = remember { mutableStateOf(true) }
 
-    val isUserAuthenticated by registrationViewModel.isUserAuthenticated.collectAsState()
     val isEmailAlreadyRegistred by registrationViewModel.isEmailAlreadyRegistred.collectAsState()
 
     val onRegisterClick = {
@@ -60,8 +60,8 @@ fun RegistrationScreen(navController: NavController, registrationViewModel: Regi
         }
     }
 
-    LaunchedEffect(isUserAuthenticated) {
-        if (isUserAuthenticated) {
+    LaunchedEffect(Unit) {
+        if (FirebaseAuth.getInstance().currentUser != null) {
             navController.navigate("catalog") {
                 popUpTo("registration") { inclusive = true }
             }

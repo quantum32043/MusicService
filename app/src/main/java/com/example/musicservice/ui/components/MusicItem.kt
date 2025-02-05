@@ -15,9 +15,11 @@ import coil.compose.rememberImagePainter
 import com.example.musicservice.ui.theme.Violet
 import com.example.musicservice.ui.theme.White
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,47 +42,49 @@ import com.example.musicservice.ui.theme.LightGray
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import com.example.musicservice.data.catalog.Song
 
 @Composable
-fun MusicItem(artistName: String, songName: String, modifier: Modifier, action: () -> Unit) {
+fun MusicItem(song:Song, action: () -> Unit) {
     Column(
-        modifier = modifier.then(Modifier.height(280.dp)
-            .width(180.dp)
-            .border(1.dp, Color.Transparent, RoundedCornerShape(10.dp)))
+        modifier = Modifier.height(240.dp)
+            .width(160.dp)
+            .border(1.dp, Color.Transparent, RoundedCornerShape(10.dp))
             .fillMaxSize()
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
+            .padding(5.dp)
+            .clickable { action() }
     ) {
-        ImageFromUrl()
+        ImageFromUrl(song.imageUrl)
+        Spacer(Modifier.height(15.dp))
+        Text(song.artist, fontSize = 18.sp, color = Color.White, fontWeight = FontWeight.Medium)
         Spacer(Modifier.height(5.dp))
-        Text(artistName, fontSize = 15.sp, color = Color.White, fontWeight = FontWeight.Medium)
-        Spacer(Modifier.height(5.dp))
-        Text(songName, fontSize = 10.sp, color = LightGray)
-        Spacer(Modifier.height(20.dp))
-        Button(onClick = { action() },
-            elevation = ButtonDefaults.buttonElevation(0.dp),
-            shape = RoundedCornerShape(5.dp),
-            modifier = Modifier.fillMaxWidth()
-                .padding(0.dp)
-                .height(35.dp)
-                .border(2.dp, Violet, RoundedCornerShape(10.dp))
-                .background(Color.Transparent),
-            colors = ButtonDefaults.buttonColors(Color.Transparent)
-                ) {
-            Text("View details", color = Violet, fontSize = 15.sp)
-        }
+        Text(song.title, fontSize = 13.sp, color = LightGray)
+//        Spacer(Modifier.height(20.dp))
+//        Button(onClick = { action() },
+//            elevation = ButtonDefaults.buttonElevation(0.dp),
+//            shape = RoundedCornerShape(5.dp),
+//            modifier = Modifier.fillMaxWidth()
+//                .padding(0.dp)
+//                .height(35.dp)
+//                .border(2.dp, Violet, RoundedCornerShape(10.dp))
+//                .background(Color.Transparent),
+//            colors = ButtonDefaults.buttonColors(Color.Transparent)
+//                ) {
+//            Text("View details", color = Violet, fontSize = 15.sp)
+//        }
     }
 
 }
 
 @Composable
-fun ImageFromUrl() {
+fun ImageFromUrl(url: String) {
     AsyncImage(
-        model = "https://on2pets.com/cdn/shop/products/145313_PT5_1024x1024@2x.jpg",
+        model = url,
         contentDescription = "The delasign logo",
         contentScale =  ContentScale.FillBounds,
         modifier = Modifier.fillMaxWidth()
-            .height(180.dp)
+            .height(160.dp)
+            .aspectRatio(1f)
             .clip(RoundedCornerShape(10.dp))
     )
 }

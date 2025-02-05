@@ -11,9 +11,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.musicservice.data.catalog.CatalogRepository
+import com.example.musicservice.data.catalog.Song
 import com.example.musicservice.ui.screens.authorization.AuthorizationScreen
-import com.example.musicservice.ui.screens.CatalogScreen
+import com.example.musicservice.ui.screens.catalog.CatalogScreen
 import com.example.musicservice.ui.screens.authorization.AuthorizationViewModel
+import com.example.musicservice.ui.screens.catalog.CatalogViewModel
 import com.example.musicservice.ui.screens.registration.RegistrationScreen
 import com.example.musicservice.ui.screens.registration.RegistrationViewModel
 
@@ -32,6 +35,14 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MusicApp() {
     val navController = rememberNavController()
+    val catalogRepository = CatalogRepository()
+    val catalogViewModel: CatalogViewModel = CatalogViewModel(catalogRepository)
+//    val song = Song(
+//        artist = "Slipknot",
+//        title = "Before I Forget",
+//        imageUrl = "https://upload.wikimedia.org/wikipedia/en/4/44/Slipknot_-_Slipknot2.jpg")
+//    catalogViewModel.addSong(song)
+
 
     Scaffold { innerPadding ->
         NavHost(
@@ -43,7 +54,9 @@ fun MusicApp() {
                 val registrationViewModel: RegistrationViewModel = RegistrationViewModel()
                 RegistrationScreen(navController, registrationViewModel)
             }
-            composable("catalog") { CatalogScreen(navController) }
+            composable("catalog") {
+                CatalogScreen(navController, catalogViewModel)
+            }
             composable("authorization") {
                 val authorizationViewModel: AuthorizationViewModel = AuthorizationViewModel()
                 AuthorizationScreen(navController, authorizationViewModel)
