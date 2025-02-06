@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -51,10 +52,10 @@ fun CatalogScreen(navController: NavController, viewModel: CatalogViewModel) {
             .fillMaxSize()
             .background(DeepGray)
             .padding(vertical = 10.dp, horizontal = 5.dp)
-            .pointerInput(Unit) { // ✅ Обработчик свайпа
+            .pointerInput(Unit) {
                 detectHorizontalDragGestures { _, dragAmount ->
-                    if (dragAmount < -100) { // Свайп влево (отрицательное значение)
-                        navController.navigate("profile") // Переход на профиль
+                    if (dragAmount < -100) {
+                        navController.navigate("profile")
                     }
                 }
             }
@@ -70,16 +71,18 @@ fun CatalogScreen(navController: NavController, viewModel: CatalogViewModel) {
             value = searchQuery,
             onValueChange = { searchQuery = it },
             label = { Text("Search by title or artist") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(vertical = 10.dp, horizontal = 5.dp),
             colors = TextFieldDefaults.textFieldColors(
-                containerColor  = BlueGray,
+                containerColor = BlueGray,
                 unfocusedTextColor = Violet,
                 focusedTextColor = Violet,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             )
         )
+
         LazyVerticalGrid (
             columns = GridCells.Adaptive(150.dp),
         ) {

@@ -126,7 +126,7 @@ fun RegistrationScreen(navController: NavController, registrationViewModel: Regi
             "Alredy registred? ",
             "Log in",
             {
-                navController.navigate("authorization")
+                navController.navigate("catalog")
             }
         )
     }

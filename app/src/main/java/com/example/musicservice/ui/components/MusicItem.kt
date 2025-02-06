@@ -45,54 +45,47 @@ import androidx.compose.material3.ButtonDefaults
 import com.example.musicservice.data.catalog.Song
 
 @Composable
-fun MusicItem(song:Song, action: () -> Unit) {
+fun MusicItem(song: Song, action: () -> Unit) {
     Column(
-        modifier = Modifier.height(240.dp)
-            .width(160.dp)
+        modifier = Modifier
+            .height(240.dp) // Ограничиваем высоту всего элемента
+            .width(160.dp) // Ограничиваем ширину всего элемента
             .border(1.dp, Color.Transparent, RoundedCornerShape(10.dp))
             .fillMaxSize()
-            .padding(5.dp)
+            .padding(horizontal = 5.dp, vertical = 5.dp)
             .clickable { action() }
     ) {
+        // Картинка с сохранением квадратных пропорций
         ImageFromUrl(song.imageUrl)
-        Spacer(Modifier.height(15.dp))
-        Text(song.artist, fontSize = 18.sp, color = Color.White, fontWeight = FontWeight.Medium)
-        Spacer(Modifier.height(5.dp))
-        Text(song.title, fontSize = 13.sp, color = LightGray)
-//        Spacer(Modifier.height(20.dp))
-//        Button(onClick = { action() },
-//            elevation = ButtonDefaults.buttonElevation(0.dp),
-//            shape = RoundedCornerShape(5.dp),
-//            modifier = Modifier.fillMaxWidth()
-//                .padding(0.dp)
-//                .height(35.dp)
-//                .border(2.dp, Violet, RoundedCornerShape(10.dp))
-//                .background(Color.Transparent),
-//            colors = ButtonDefaults.buttonColors(Color.Transparent)
-//                ) {
-//            Text("View details", color = Violet, fontSize = 15.sp)
-//        }
-    }
 
+        Spacer(Modifier.height(15.dp)) // Отступ между картинкой и текстом
+
+        Text(
+            song.artist,
+            fontSize = 18.sp,
+            color = Color.White,
+            fontWeight = FontWeight.Medium
+        )
+        Spacer(Modifier.height(5.dp)) // Отступ между артистом и заголовком
+
+        Text(
+            song.title,
+            fontSize = 13.sp,
+            color = LightGray
+        )
+    }
 }
 
 @Composable
 fun ImageFromUrl(url: String) {
+    // Картинка, которая сохраняет квадратные пропорции
     AsyncImage(
         model = url,
         contentDescription = "The delasign logo",
-        contentScale =  ContentScale.FillBounds,
-        modifier = Modifier.fillMaxWidth()
-            .height(160.dp)
-            .aspectRatio(1f)
-            .clip(RoundedCornerShape(10.dp))
+        contentScale = ContentScale.Crop, // Обрезаем изображение, чтобы оно заполнило пространство
+        modifier = Modifier
+            .fillMaxWidth() // Ширина картинки будет равна ширине контейнера
+            .height(160.dp) // Задаем фиксированную высоту для картинки
+            .clip(RoundedCornerShape(10.dp)) // Скругление углов картинки
     )
 }
-
-//@Preview
-//@Composable
-//fun PreviewImageFromUrl() {
-//    Column {
-//        MusicItem("Some name", "Some name", Modifier)
-//    }
-//}

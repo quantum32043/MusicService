@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,18 +27,18 @@ import com.example.musicservice.ui.components.RegistrationTextField
 import com.example.musicservice.ui.components.TextWithClickableLink
 import com.example.musicservice.ui.screens.registration.RegistrationViewModel
 import com.example.musicservice.ui.theme.DeepGray
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AuthorizationScreen(navController: NavController, authorizationViewModel: AuthorizationViewModel) {
     var emailFieldValue = remember { mutableStateOf(TextFieldValue()) }
     var passwordFieldValue = remember { mutableStateOf(TextFieldValue()) }
+    var isUserExists = remember { mutableStateOf(true) }
 
-    val isUserAuthenticated by authorizationViewModel.isUserAuthenticated.collectAsState()
-
-    LaunchedEffect(isUserAuthenticated) {
-        if (isUserAuthenticated) {
+    LaunchedEffect(Unit) {
+        if (FirebaseAuth.getInstance().currentUser != null) {
             navController.navigate("catalog") {
-                popUpTo("authorization") { inclusive = true }
+                popUpTo("registration") { inclusive = true }
             }
         }
     }
@@ -69,7 +70,15 @@ fun AuthorizationScreen(navController: NavController, authorizationViewModel: Au
                 passwordFieldValue.value = it
             }
         )
-        Spacer(Modifier.height(40.dp))
+        Spacer(Modifier.height(20.dp))
+        if (!isUserExists.value) {
+            Text(
+                "Entered email doesn't exists",
+                fontSize = 15.sp,
+                color = Color.Red,
+            )
+        }
+        Spacer(Modifier.height(20.dp))
         CustomButton("Sign In") {
             authorizationViewModel.signIn(
                 emailFieldValue.value.text.trim(),
@@ -81,7 +90,7 @@ fun AuthorizationScreen(navController: NavController, authorizationViewModel: Au
             "No account? ",
             "Create one",
             {
-                navController.navigate("authorization")
+                navController.navigate("registration")
             }
         )
     }
