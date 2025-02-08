@@ -1,11 +1,10 @@
-package com.example.musicservice.ui.screens.registration
+package com.example.musicservice.ui.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -40,27 +39,28 @@ fun isValidPassword(password: String): Boolean {
 }
 
 @Composable
-fun RegistrationScreen(navController: NavController, registrationViewModel: RegistrationViewModel) {
+fun RegistrationScreen(navController: NavController, authViewModel: AuthViewModel) {
     var emailFieldValue = remember { mutableStateOf(TextFieldValue()) }
     var passwordFieldValue = remember { mutableStateOf(TextFieldValue()) }
 
     var isEmailCorrect = remember { mutableStateOf(true) }
     var isPasswordCorrect = remember { mutableStateOf(true) }
 
-    val isEmailAlreadyRegistred by registrationViewModel.isEmailAlreadyRegistred.collectAsState()
+    val isEmailAlreadyRegistred by authViewModel.isEmailAlreadyRegistred.collectAsState()
+    val isUserAuthenticated by authViewModel.isUserAuthenticated.collectAsState()
 
     val onRegisterClick = {
         isEmailCorrect.value = isValidEmail(emailFieldValue.value.text.trim())
         isPasswordCorrect.value = isValidPassword(passwordFieldValue.value.text.trim())
         if(isEmailCorrect.value && isPasswordCorrect.value) {
-            registrationViewModel.signUp(
+            authViewModel.signUp(
                 emailFieldValue.value.text.trim(),
                 passwordFieldValue.value.text.trim()
             )
         }
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(isUserAuthenticated) {
         if (FirebaseAuth.getInstance().currentUser != null) {
             navController.navigate("catalog") {
                 popUpTo("registration") { inclusive = true }
@@ -126,7 +126,7 @@ fun RegistrationScreen(navController: NavController, registrationViewModel: Regi
             "Alredy registred? ",
             "Log in",
             {
-                navController.navigate("catalog")
+                navController.navigate("authorization")
             }
         )
     }

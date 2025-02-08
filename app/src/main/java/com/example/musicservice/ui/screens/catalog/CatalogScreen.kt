@@ -2,17 +2,32 @@ package com.example.musicservice.ui.screens.catalog
 
 import androidx.compose.runtime.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -26,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,21 +68,35 @@ fun CatalogScreen(navController: NavController, viewModel: CatalogViewModel) {
             .fillMaxSize()
             .background(DeepGray)
             .padding(vertical = 10.dp, horizontal = 5.dp)
-            .pointerInput(Unit) {
-                detectHorizontalDragGestures { _, dragAmount ->
-                    if (dragAmount < -100) {
-                        navController.navigate("profile")
-                    }
-                }
-            }
     ) {
-        Text(
-            "Song catalog",
-            Modifier.align(Alignment.Start)
-                .padding(10.dp),
-            fontSize = 30.sp,
-            color = Color.White
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+            Text(
+                "Song catalog",
+                Modifier.padding(10.dp),
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
             )
+            Row()
+            {
+                Icon(
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "Favorite",
+                    modifier = Modifier.size(45.dp),
+                    tint = Color.Red,
+                )
+                Icon(
+                    imageVector = Icons.Filled.AccountCircle,
+                    contentDescription = "Profile",
+                    modifier = Modifier.size(45.dp)
+                        .clickable { run { navController.navigate("profile") } },
+                    tint = Violet
+                )
+            }
+        }
         TextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
@@ -87,7 +117,9 @@ fun CatalogScreen(navController: NavController, viewModel: CatalogViewModel) {
             columns = GridCells.Adaptive(150.dp),
         ) {
             items(filteredSongs) { song ->
-                MusicItem(song) { }
+                MusicItem(song) {
+                    navController.navigate("itemScreen/${song.id}")
+                }
             }
         }
     }

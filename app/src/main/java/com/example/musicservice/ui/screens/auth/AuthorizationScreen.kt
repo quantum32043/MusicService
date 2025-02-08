@@ -1,4 +1,4 @@
-package com.example.musicservice.ui.screens.authorization
+package com.example.musicservice.ui.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,20 +24,20 @@ import androidx.navigation.NavController
 import com.example.musicservice.ui.components.CustomButton
 import com.example.musicservice.ui.components.RegistrationTextField
 import com.example.musicservice.ui.components.TextWithClickableLink
-import com.example.musicservice.ui.screens.registration.RegistrationViewModel
 import com.example.musicservice.ui.theme.DeepGray
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun AuthorizationScreen(navController: NavController, authorizationViewModel: AuthorizationViewModel) {
+fun AuthorizationScreen(navController: NavController, authViewModel: AuthViewModel) {
     var emailFieldValue = remember { mutableStateOf(TextFieldValue()) }
     var passwordFieldValue = remember { mutableStateOf(TextFieldValue()) }
     var isUserExists = remember { mutableStateOf(true) }
+    val isUserAuthenticated by authViewModel.isUserAuthenticated.collectAsState()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(isUserAuthenticated) {
         if (FirebaseAuth.getInstance().currentUser != null) {
             navController.navigate("catalog") {
-                popUpTo("registration") { inclusive = true }
+                popUpTo("authorization") { inclusive = true }
             }
         }
     }
@@ -80,7 +79,7 @@ fun AuthorizationScreen(navController: NavController, authorizationViewModel: Au
         }
         Spacer(Modifier.height(20.dp))
         CustomButton("Sign In") {
-            authorizationViewModel.signIn(
+            authViewModel.signIn(
                 emailFieldValue.value.text.trim(),
                 passwordFieldValue.value.text.trim()
             )

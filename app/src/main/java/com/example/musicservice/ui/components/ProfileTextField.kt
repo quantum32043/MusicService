@@ -1,5 +1,6 @@
 package com.example.musicservice.ui.components
 
+import android.provider.ContactsContract.Profile
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +31,7 @@ import org.w3c.dom.Text
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistrationTextField(label: String, value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
+fun ProfileTextField(label: String, value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
     TextField(
         value = value,
         onValueChange = onValueChange,
@@ -38,7 +39,7 @@ fun RegistrationTextField(label: String, value: TextFieldValue, onValueChange: (
         modifier = Modifier
             .height(60.dp)
             .fillMaxWidth()
-            .padding(horizontal = 15.dp),
+            .padding(horizontal = 10.dp),
         colors = TextFieldDefaults.textFieldColors(
             containerColor  = BlueGray,
             unfocusedTextColor = Violet,

@@ -12,7 +12,7 @@ class CatalogRepository {
 
     fun getSongs(): Flow<List<Song>> = callbackFlow {
         val listener = songCollection.addSnapshotListener { snapshot, _ ->
-            val songs = snapshot?.documents?.mapNotNull { it.toObject(Song::class.java) } ?: emptyList()
+            val songs = snapshot?.documents?.mapNotNull { it.toObject(Song::class.java)?.copy(id = it.id) } ?: emptyList()
             trySend(songs)
         }
         awaitClose { listener.remove() }

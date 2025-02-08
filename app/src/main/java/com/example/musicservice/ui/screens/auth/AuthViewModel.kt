@@ -1,21 +1,34 @@
-package com.example.musicservice.ui.screens.registration
+package com.example.musicservice.ui.screens.auth
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import okhttp3.internal.concurrent.Task
 
-class RegistrationViewModel(private val auth: FirebaseAuth = FirebaseAuth.getInstance()): ViewModel() {
+class AuthViewModel(private val auth: FirebaseAuth = FirebaseAuth.getInstance()): ViewModel() {
     private val _isUserAuthenticated = MutableStateFlow(false)
+    val isUserAuthenticated: StateFlow<Boolean> = _isUserAuthenticated
 
     private val _isEmailAlreadyRegistred = MutableStateFlow(false)
     val isEmailAlreadyRegistred: StateFlow<Boolean> = _isEmailAlreadyRegistred
 
     init {
-        _isUserAuthenticated.value = auth.currentUser != null
+        auth.addAuthStateListener { firebaseAuth ->
+            _isUserAuthenticated.value = firebaseAuth.currentUser != null
+        }
+    }
+
+    fun signIn(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener() { task ->
+                if(task.isSuccessful) {
+                    Log.d("FirebaseAuth", "Авторизация успешна: ${auth.currentUser?.email}}")
+                    _isUserAuthenticated.value = true;
+                } else {
+                    Log.e("FirebaseAuth", "Ошибка: ${task.exception?.message}")
+                }
+            }
     }
 
     fun signUp(email: String, password: String) {
@@ -29,5 +42,9 @@ class RegistrationViewModel(private val auth: FirebaseAuth = FirebaseAuth.getIns
                     _isEmailAlreadyRegistred.value = true;
                 }
             }
+    }
+
+    fun isUserLoggedIn(): Boolean {
+        return FirebaseAuth.getInstance().currentUser != null
     }
 }
