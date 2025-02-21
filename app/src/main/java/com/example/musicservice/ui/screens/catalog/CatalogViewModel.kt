@@ -8,11 +8,21 @@ import com.example.musicservice.data.catalog.CatalogRepository
 import com.example.musicservice.data.catalog.Song
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CatalogViewModel(private val repository: CatalogRepository): ViewModel() {
     private val _songs = MutableStateFlow<List<Song>>(emptyList())
     val songs: StateFlow<List<Song>> = _songs
+
+    private val _favoriteSongs = MutableStateFlow<Set<String>>(emptySet())
+    val favoriteSongs: StateFlow<Set<String>> = _favoriteSongs
+
+    fun toggleFavorite(songId: String) {
+        _favoriteSongs.update { favorites ->
+            if (favorites.contains(songId)) favorites - songId else favorites + songId
+        }
+    }
 
     init {
         loadSongs()

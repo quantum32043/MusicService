@@ -31,7 +31,7 @@ import org.w3c.dom.Text
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileTextField(label: String, value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
+fun ProfileTextField(label: String, value: String, onValueChange: (String) -> Unit) {
     TextField(
         value = value,
         onValueChange = onValueChange,
@@ -41,7 +41,7 @@ fun ProfileTextField(label: String, value: TextFieldValue, onValueChange: (TextF
             .fillMaxWidth()
             .padding(horizontal = 10.dp),
         colors = TextFieldDefaults.textFieldColors(
-            containerColor  = BlueGray,
+            containerColor = BlueGray,
             unfocusedTextColor = Violet,
             focusedTextColor = Violet,
             focusedIndicatorColor = Color.Transparent,

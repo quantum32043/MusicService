@@ -43,8 +43,4 @@ class AuthViewModel(private val auth: FirebaseAuth = FirebaseAuth.getInstance())
                 }
             }
     }
-
-    fun isUserLoggedIn(): Boolean {
-        return FirebaseAuth.getInstance().currentUser != null
-    }
 }

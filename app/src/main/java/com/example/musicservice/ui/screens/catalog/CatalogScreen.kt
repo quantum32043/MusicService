@@ -85,7 +85,8 @@ fun CatalogScreen(navController: NavController, viewModel: CatalogViewModel) {
                 Icon(
                     imageVector = Icons.Filled.Favorite,
                     contentDescription = "Favorite",
-                    modifier = Modifier.size(45.dp),
+                    modifier = Modifier.size(45.dp)
+                        .clickable { run { navController.navigate("favorites") } },
                     tint = Color.Red,
                 )
                 Icon(

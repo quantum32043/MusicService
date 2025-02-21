@@ -18,6 +18,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
@@ -42,37 +46,48 @@ import com.example.musicservice.ui.theme.LightGray
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import com.example.musicservice.data.catalog.Song
 
 @Composable
 fun MusicItem(song: Song, action: () -> Unit) {
     Column(
         modifier = Modifier
-            .height(240.dp) // Ограничиваем высоту всего элемента
-            .width(160.dp) // Ограничиваем ширину всего элемента
+            .height(240.dp)
+            .width(160.dp)
             .border(1.dp, Color.Transparent, RoundedCornerShape(10.dp))
             .fillMaxSize()
             .padding(horizontal = 5.dp, vertical = 5.dp)
             .clickable { action() }
     ) {
-        // Картинка с сохранением квадратных пропорций
         ImageFromUrl(song.imageUrl)
 
-        Spacer(Modifier.height(15.dp)) // Отступ между картинкой и текстом
+        Spacer(Modifier.height(15.dp))
+        Row {
+            Column {
+                Text(
+                    song.artist,
+                    fontSize = 18.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+                Spacer(Modifier.height(5.dp))
 
-        Text(
-            song.artist,
-            fontSize = 18.sp,
-            color = Color.White,
-            fontWeight = FontWeight.Medium
-        )
-        Spacer(Modifier.height(5.dp)) // Отступ между артистом и заголовком
-
-        Text(
-            song.title,
-            fontSize = 13.sp,
-            color = LightGray
-        )
+                Text(
+                    song.title,
+                    fontSize = 13.sp,
+                    color = LightGray
+                )
+            }
+        }
+//        Icon(
+//            imageVector = if (favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+//            contentDescription = "Favorite",
+//            modifier = Modifier
+//                .size(45.dp)
+//                .clickable { viewModel.toggleFavorite(songId) },
+//            tint = if (favorite) Color.Red else Color.Gray
+//        )
     }
 }
 
