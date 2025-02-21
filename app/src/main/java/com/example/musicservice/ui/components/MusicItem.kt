@@ -93,7 +93,6 @@ fun MusicItem(song: Song, action: () -> Unit) {
 
 @Composable
 fun ImageFromUrl(url: String) {
-    // Картинка, которая сохраняет квадратные пропорции
     AsyncImage(
         model = url,
         contentDescription = "The delasign logo",

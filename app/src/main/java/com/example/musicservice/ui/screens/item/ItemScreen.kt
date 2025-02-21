@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -36,11 +38,14 @@ fun ItemScreen(viewModel: ItemViewModel, songId: String) {
             Text(text = "Loading...", color = Color.White)
         }
     } else {
-        Column(modifier = Modifier.fillMaxSize().background(DeepGray).padding(10.dp)) {
+        Column(modifier = Modifier.fillMaxSize()
+            .background(DeepGray)
+            .padding(10.dp)
+            .verticalScroll(rememberScrollState())) {
             ImageSlider(images = song!!.images)
             Spacer(modifier = Modifier.height(16.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                Text(text = song!!.title, fontSize = 50.sp, color = Color.White)
+                Text(text = song!!.title, fontSize = 40.sp, color = Color.White, modifier = Modifier.width(330.dp))
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                     contentDescription = "Favorite",

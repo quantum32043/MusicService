@@ -28,11 +28,17 @@ import com.example.musicservice.ui.screens.favorite.FavoritesScreen
 import com.example.musicservice.ui.screens.favorite.FavoritesViewModel
 import com.example.musicservice.ui.screens.item.ItemScreen
 import com.example.musicservice.ui.screens.item.ItemViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.firestoreSettings
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Firebase.firestore.firestoreSettings = firestoreSettings {
+            isPersistenceEnabled = true
+        }
         setContent {
             MusicApp();
         }

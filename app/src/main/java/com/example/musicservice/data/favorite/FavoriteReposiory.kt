@@ -14,13 +14,26 @@ class FavoritesRepository {
     private val favoritesCollection = db.collection("favorites")
 
     fun getFavoriteSongs(userId: String): Flow<List<Song>> = callbackFlow {
-        val userFavoritesCollection = favoritesCollection.document(userId).collection("songs")
-        val listener = userFavoritesCollection.addSnapshotListener { snapshot, _ ->
-            val songs = snapshot?.documents?.mapNotNull { it.toObject(Song::class.java)?.copy(id = it.id) } ?: emptyList()
-            trySend(songs)
+        val listener = try {
+            val userFavoritesCollection = favoritesCollection.document(userId).collection("songs")
+            userFavoritesCollection.addSnapshotListener { snapshot, _ ->
+                val songs = snapshot?.documents?.mapNotNull {
+                    it.toObject(Song::class.java)?.copy(id = it.id)
+                } ?: emptyList()
+                trySend(songs).isSuccess
+            }
+        } catch (e: Exception) {
+            Log.e("ItemScreen", "No connection: ${e.message}")
+            close(e)
+            null
         }
-        awaitClose { listener.remove() }
+
+        awaitClose {
+            listener?.remove()
+            Log.d("ItemScreen", "Listener removed")
+        }
     }
+
 
     suspend fun addToFavorites(userId: String, song: Song) {
         val userFavoritesCollection = favoritesCollection.document(userId).collection("songs")

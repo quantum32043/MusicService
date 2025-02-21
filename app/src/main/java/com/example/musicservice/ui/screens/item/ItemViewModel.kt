@@ -11,6 +11,7 @@ import com.example.musicservice.data.favorite.FavoritesRepository
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -30,13 +31,21 @@ class ItemViewModel() : ViewModel() {
 
     fun loadSongInfo(songId: String) {
         viewModelScope.launch {
-            _song.value = itemRepository.getSongById(songId)
+            try {
+                _song.value = itemRepository.getSongById(songId)
+            } catch (e: FirebaseFirestoreException) {
+                Log.e("ItemScreen", "No connection: ${e.message}")
+            }
         }
     }
 
     fun checkIfFavorite(songId: String) {
         viewModelScope.launch {
+            try {
             _isFavorite.value = favoritesRepository.isFavorite(userId, songId)
+            } catch (e: FirebaseFirestoreException) {
+                Log.e("ItemScreen", "No connection: ${e.message}")
+            }
         }
     }
 

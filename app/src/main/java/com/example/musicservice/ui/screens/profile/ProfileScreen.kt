@@ -41,7 +41,7 @@
 //import androidx.compose.material3.*
 //import androidx.compose.runtime.*
 //import androidx.compose.ui.text.TextStyle
-//import com.example.musicservice.ui.theme.BlueGray
+//import com.example.musicservice.ui.theme.DeepGray
 //import com.example.musicservice.ui.theme.Violet
 //import java.util.*
 //
@@ -256,6 +256,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.musicservice.ui.theme.BlueGray
+import com.example.musicservice.ui.theme.DeepGray
 import com.example.musicservice.ui.theme.Violet
 import java.util.*
 
@@ -323,12 +324,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp)
@@ -342,12 +344,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp)
@@ -361,12 +364,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp)
@@ -388,12 +392,12 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                         .height(60.dp)
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = BlueGray,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        containerColor = DeepGray,
                         unfocusedTextColor = Violet,
                         focusedTextColor = Violet,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
+                        focusedBorderColor = Violet,
+                        unfocusedBorderColor = BlueGray
                     ),
                     textStyle = TextStyle(fontSize = 18.sp),
                     shape = RoundedCornerShape(12.dp)
@@ -436,12 +440,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp),
@@ -457,12 +462,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp)
@@ -476,12 +482,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp)
@@ -495,12 +502,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp)
@@ -514,12 +522,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp)
@@ -533,12 +542,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                     .height(60.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = BlueGray,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = DeepGray,
                     unfocusedTextColor = Violet,
                     focusedTextColor = Violet,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    focusedBorderColor = Violet,
+                    unfocusedBorderColor = BlueGray
+                    
                 ),
                 textStyle = TextStyle(fontSize = 18.sp),
                 shape = RoundedCornerShape(12.dp)
