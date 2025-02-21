@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CatalogViewModel(private val repository: CatalogRepository): ViewModel() {
+class CatalogViewModel(): ViewModel() {
+    private val repository = CatalogRepository()
+
     private val _songs = MutableStateFlow<List<Song>>(emptyList())
     val songs: StateFlow<List<Song>> = _songs
 

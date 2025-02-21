@@ -31,8 +31,8 @@ import com.google.firebase.auth.FirebaseAuth
 fun AuthorizationScreen(navController: NavController, authViewModel: AuthViewModel) {
     var emailFieldValue = remember { mutableStateOf(TextFieldValue()) }
     var passwordFieldValue = remember { mutableStateOf(TextFieldValue()) }
-    var isUserExists = remember { mutableStateOf(true) }
     val isUserAuthenticated by authViewModel.isUserAuthenticated.collectAsState()
+    val authError by authViewModel.authError.collectAsState()
 
     LaunchedEffect(isUserAuthenticated) {
         if (FirebaseAuth.getInstance().currentUser != null) {
@@ -43,9 +43,9 @@ fun AuthorizationScreen(navController: NavController, authViewModel: AuthViewMod
     }
 
     Column(
-    modifier = Modifier.fillMaxSize().background(DeepGray),
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center
+        modifier = Modifier.fillMaxSize().background(DeepGray),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = "Welcome back",
@@ -59,6 +59,7 @@ fun AuthorizationScreen(navController: NavController, authViewModel: AuthViewMod
             emailFieldValue.value,
             onValueChange = {
                 emailFieldValue.value = it
+                authViewModel.clearError()
             }
         )
         Spacer(Modifier.height(40.dp))
@@ -67,12 +68,13 @@ fun AuthorizationScreen(navController: NavController, authViewModel: AuthViewMod
             passwordFieldValue.value,
             onValueChange = {
                 passwordFieldValue.value = it
+                authViewModel.clearError()
             }
         )
         Spacer(Modifier.height(20.dp))
-        if (!isUserExists.value) {
+        if (authError != null) {
             Text(
-                "Entered email doesn't exists",
+                text = authError!!,
                 fontSize = 15.sp,
                 color = Color.Red,
             )
@@ -87,10 +89,9 @@ fun AuthorizationScreen(navController: NavController, authViewModel: AuthViewMod
         Spacer(Modifier.height(40.dp))
         TextWithClickableLink(
             "No account? ",
-            "Create one",
-            {
-                navController.navigate("registration")
-            }
-        )
+            "Create one"
+        ) {
+            navController.navigate("registration")
+        }
     }
 }

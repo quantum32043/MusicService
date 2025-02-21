@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -107,16 +108,17 @@ fun RegistrationScreen(navController: NavController, authViewModel: AuthViewMode
                 "Invalid email format",
                 fontSize = 15.sp,
                 color = Color.Red,
+                textAlign = TextAlign.Center
             )
         } else if (!isPasswordCorrect.value) {
             Text(
-                "Password must contain at least 1 uppercase latter," +
-                        "1 lowercase latter, 1 special symbol" +
+                "Password must contain at least 1 uppercase letter, " +
+                        "1 lowercase letter, 1 special symbol " +
                         "and be at least 6 symbols long",
                 fontSize = 15.sp,
                 color = Color.Red,
-                modifier = Modifier.padding(15.dp)
-
+                modifier = Modifier.padding(15.dp),
+                textAlign = TextAlign.Center
             )
         }
         Spacer(Modifier.height(20.dp))
@@ -124,10 +126,9 @@ fun RegistrationScreen(navController: NavController, authViewModel: AuthViewMode
         Spacer(Modifier.height(40.dp))
         TextWithClickableLink(
             "Alredy registred? ",
-            "Log in",
-            {
-                navController.navigate("authorization")
-            }
-        )
-    }
+            "Log in"
+        ) {
+            navController.navigate("authorization")
+        }
+}
 }

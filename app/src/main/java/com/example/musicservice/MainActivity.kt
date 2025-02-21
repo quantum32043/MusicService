@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -42,9 +43,6 @@ class MainActivity : ComponentActivity() {
 fun MusicApp() {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = AuthViewModel()
-    val itemRepository = ItemRepository()
-    val favoritesRepository = FavoritesRepository()
-    val itemViewModel = ItemViewModel(itemRepository, favoritesRepository)
 
     Scaffold { innerPadding ->
         NavHost(
@@ -56,27 +54,24 @@ fun MusicApp() {
                 RegistrationScreen(navController, authViewModel)
             }
             composable("catalog") {
-                val catalogRepository = CatalogRepository()
-                val catalogViewModel: CatalogViewModel = CatalogViewModel(catalogRepository)
-                //catalogViewModel.addSong(song)
+                val catalogViewModel: CatalogViewModel = viewModel()
                 CatalogScreen(navController, catalogViewModel)
             }
             composable("authorization") {
                 AuthorizationScreen(navController, authViewModel)
             }
             composable("profile") {
-                val profileRepository: ProfileRepository = ProfileRepository()
-                val profileViewModel: ProfileViewModel = ProfileViewModel(profileRepository)
+                val profileViewModel: ProfileViewModel = viewModel()
                 ProfileScreen(navController, profileViewModel)
             }
             composable("favorites") {
-                val favoriteRepository: FavoritesRepository = FavoritesRepository()
-                val favoritesViewModel: FavoritesViewModel = FavoritesViewModel(favoriteRepository)
+                val favoritesViewModel: FavoritesViewModel = viewModel()
                 FavoritesScreen(navController, favoritesViewModel)
             }
 
             composable("itemScreen/{songId}") { backStackEntry ->
                 val songId = backStackEntry.arguments?.getString("songId")
+                val itemViewModel: ItemViewModel = viewModel()
                 if (songId != null) {
                     ItemScreen(itemViewModel, songId)
                 }

@@ -16,7 +16,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ItemViewModel(private val itemRepository: ItemRepository, private val favoritesRepository: FavoritesRepository) : ViewModel() {
+class ItemViewModel() : ViewModel() {
+    private val itemRepository: ItemRepository = ItemRepository()
+    private val favoritesRepository: FavoritesRepository = FavoritesRepository()
+
     private val _song = MutableStateFlow<Song?>(null)
     val song: StateFlow<Song?> = _song
 

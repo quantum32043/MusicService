@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class FavoritesViewModel(private val repository: FavoritesRepository) : ViewModel() {
+class FavoritesViewModel() : ViewModel() {
+    private val repository: FavoritesRepository = FavoritesRepository()
     private val _favoriteSongs = MutableStateFlow<List<Song>>(emptyList())
     val favoriteSongs: StateFlow<List<Song>> = _favoriteSongs
 

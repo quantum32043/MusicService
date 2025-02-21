@@ -3,6 +3,8 @@ package com.example.musicservice.ui.screens.auth
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -19,16 +21,26 @@ class AuthViewModel(private val auth: FirebaseAuth = FirebaseAuth.getInstance())
         }
     }
 
+    private val _authError = MutableStateFlow<String?>(null)
+    val authError: StateFlow<String?> = _authError
+
     fun signIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener() { task ->
-                if(task.isSuccessful) {
-                    Log.d("FirebaseAuth", "Авторизация успешна: ${auth.currentUser?.email}}")
-                    _isUserAuthenticated.value = true;
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _isUserAuthenticated.value = true
                 } else {
-                    Log.e("FirebaseAuth", "Ошибка: ${task.exception?.message}")
+                    _authError.value = when {
+                        task.exception is FirebaseAuthInvalidCredentialsException -> "Incorrect password"
+                        task.exception is FirebaseAuthInvalidUserException -> "Entered email doesn't exist"
+                        else -> "Authentication failed"
+                    }
                 }
             }
+    }
+
+    fun clearError() {
+        _authError.value = null
     }
 
     fun signUp(email: String, password: String) {
